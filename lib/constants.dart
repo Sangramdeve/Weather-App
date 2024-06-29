@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+
+const buttonColor = Color(0xFF0F5992);
+const backgroundColor = Color(0xFFBFD6F5);
+Color cloudColor = Color(0xFFf3f4f7);
+
+const kSecondaryColor = Color(0xFFFE9901);
+const kContentColorLightTheme = Color(0xFF1D1D35);
+const kContentColorDarkTheme = Color(0xFFF5FCF9);
+const kWarninngColor = Color(0xFFF3BB1C);
+const kErrorColor = Color(0xFF9B0406);
+const errorColor = Color(0x790506FF);
+const neuLightBgColor = Color(0xFFC9D2E1);
+const neuDarkBGColor = Color(0xFF33393E);
+const neuLightColor = Color(0xFFF8F8F8);
+const neuDarkColor = Color(0xFF7E9DC5);
+const strength = Color(0xFF2096F3);
+const strength2 = Color(0xFF6B9BED);
+const strength3 = Color(0xFF3AC9EA);
+const strength4 = Color(0xFF40D9FF);
+const stretch = Color(0xFF14BD1B);
+const stretch2 = Color(0xFF4ED640);
+const stretch3 = Color(0xFF7CCD40);
+const stretch4 = Color(0xFFA2E161);
+const relax = Color(0xFFF4E321);
+const relax2 = Color(0xFFEDD019);
+const relax3 = Color(0xFFF4BF20);
+const relax4 = Color(0xFFEFA717);
+const cardio = Color(0xFFF12D6F);
+const cardio2 = Color(0xFFE33794);
+const cardio3 = Color(0xFFDD2EA0);
+const cardio4 = Color(0xFFDD3CE3);
+const circle = Color(0xFF4E77DC);
+const circle2 = Color(0xFF3A4591);
+const kDefaultPadding = 20.0;
