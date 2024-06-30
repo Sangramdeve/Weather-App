@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/screens/weather_screen.dart';
+import 'package:weather_app/screens/current_weather.dart';
 
 import '../constants.dart';
 
@@ -14,7 +14,7 @@ class OnbordingScreen extends StatefulWidget {
 class _OnbordingScreenState extends State<OnbordingScreen> {
   void initState() {
     super.initState();
-    _checkFirstTimeUser();
+    //_checkFirstTimeUser();
   }
 
   Future<void> _checkFirstTimeUser() async {
@@ -45,10 +45,10 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
           children: [
             Positioned(
               top: 180,
-              right: -60,
+              right: -50,
               child: Container(
-                height: 130,
-                width: 130,
+                height: 120,
+                width: 120,
                 decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.white,
@@ -62,8 +62,8 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               top: 80,
               right: -150,
               child: Container(
-                height: 350,
-                width: 350,
+                height: 330,
+                width: 330,
                 decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.white,
@@ -74,11 +74,11 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               ),
             ),
             Positioned(
-              top: -20,
-              right: -200,
+              top: -10,
+              right: -205,
               child: Container(
-                height: 550,
-                width: 550,
+                height: 500,
+                width: 500,
                 decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.white,
@@ -89,11 +89,11 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               ),
             ),
             Positioned(
-              top: -90,
-              right: -290,
+              top: -100,
+              right: -260,
               child: Container(
-                height: 750,
-                width: 750,
+                height: 700,
+                width: 700,
                 decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.white,
@@ -104,7 +104,7 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               ),
             ),
             Positioned(
-              top: 86,
+              top: 80,
               left: -60,
               child: Container(
                 height: 130,
@@ -119,8 +119,8 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               top: 250,
               right: -60,
               child: Container(
-                height: 250,
-                width: 250,
+                height: 230,
+                width: 230,
                 decoration: BoxDecoration(
                     color: cloudColor,
                     shape: BoxShape.circle
@@ -128,11 +128,11 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               ),
             ),
             Positioned(
-              bottom: 300,
-              right: 130,
+              bottom: 320,
+              right: 110,
               child: Container(
-                height: 200,
-                width: 200,
+                height: 190,
+                width: 190,
                 decoration: BoxDecoration(
                     color: cloudColor,
                     shape: BoxShape.circle
@@ -140,8 +140,8 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
               ),
             ),
             Positioned(
-              bottom: 300,
-              right: 0,
+              bottom: 320,
+              right: -30,
               child: Container(
                 height: 180,
                 width: 240,

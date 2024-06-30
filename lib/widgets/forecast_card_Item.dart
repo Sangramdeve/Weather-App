@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:weather_app/Model/daily_weather.dart';
-
-import '../Model/weather_model.dart';
-import '../Provider/WeatherProvider.dart';
+import 'package:weather_app/constants.dart';
 
 
 class ForecastCardItem extends StatelessWidget {
@@ -23,16 +20,47 @@ class ForecastCardItem extends StatelessWidget {
     double tempInCelsius = tempInKelvin - 273.15;
     String weatherIcon = weatherData.weather[0].icon;
 
-    // Construct the complete URL for the weather icon
     String iconUrl = 'https://openweathermap.org/img/wn/$weatherIcon.png';
 
 
-    return Row(
-      children: [
-        Image.network(iconUrl), // Use iconUrl here
-        Text('${tempInCelsius.toStringAsFixed(2)} °C', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        Text(_getFormattedDate(date), style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+      child: Row(
+        children: [
+          Container(
+            width: 70.0,
+            height: 70.0,
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(.5),
+              shape: BoxShape.circle,
+            ),
+            child: Image.network(
+              iconUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Spacer(),
+          Container(
+            height: 60,
+            width: 250,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(
+                  color: Colors.white.withOpacity(0.5),
+                  width: 1.5),
+            ),
+            child: Row(
+              children: [
+                Spacer(),
+                Text('${tempInCelsius.toStringAsFixed(2)}°C', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Spacer(),
+                Text(_getFormattedDate(date), style: TextStyle(fontSize: 20,)),
+                Spacer(),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 

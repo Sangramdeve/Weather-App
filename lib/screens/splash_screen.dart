@@ -28,12 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _determineUserCurrentPosition();
-    Future.delayed(const Duration(seconds: 3), () {
-      // Navigate to the main app screen (Login in this case)
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnbordingScreen()),
-      );
-    });
   }
 
   Future _determineUserCurrentPosition() async {
@@ -59,8 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
       debugPrint("user denied permission forever");
     }
     getUserLocation();
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
   }
 
   void getUserLocation() async {
@@ -70,6 +62,12 @@ class _SplashScreenState extends State<SplashScreen> {
       );
       _fetchWeather(position);
       getWeatherData(position);
+      Future.delayed(const Duration(seconds: 3), () {
+        // Navigate to the main app screen (Login in this case)
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const OnbordingScreen()),
+        );
+      });
     } catch (e) {
       if (e is TimeoutException) {
         Position? lastKnownPosition;
