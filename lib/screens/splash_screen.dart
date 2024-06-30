@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/daily_weather.dart';
 import '../Model/weather_model.dart';
 import '../Provider/WeatherProvider.dart';
 import '../utils/weather_service.dart';
+import 'current_weather.dart';
 import 'onBording_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -57,35 +59,68 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void getUserLocation() async {
     try {
+      // Get the current position
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.medium,
       );
+
+      // Fetch weather data and handle it
       _fetchWeather(position);
       getWeatherData(position);
-      Future.delayed(const Duration(seconds: 3), () {
-        // Navigate to the main app screen (Login in this case)
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const OnbordingScreen()),
-        );
-      });
+
+
+      await Future.delayed(Duration(seconds: 2));
+
+      navigateBasedOnFirstTime();
+
     } catch (e) {
+      // Handle location errors
       if (e is TimeoutException) {
+        // Attempt to get last known position
         Position? lastKnownPosition;
         try {
           lastKnownPosition = await Geolocator.getLastKnownPosition();
         } catch (e) {
           // Handle errors related to getLastKnownPosition
         }
+
+        // Fetch weather data using last known position if available
         if (lastKnownPosition != null) {
           _fetchWeather(lastKnownPosition);
           getWeatherData(lastKnownPosition);
+
+          // Wait for a short delay to simulate processing time (optional)
+          await Future.delayed(Duration(seconds: 2));
+
+          // Navigate to the main app screen (OnbordingScreen) after processing
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const OnbordingScreen()),
+          );
         } else {
+          // Handle case where location cannot be obtained
           handleLocationError('Unable to obtain location.');
         }
       } else {
-        // Handle other errors
+        // Handle other errors related to getting current position
         handleLocationError('Error: $e');
       }
+    }
+  }
+
+  Future<void> navigateBasedOnFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+
+    if (isFirstTime) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const OnbordingScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const WeatherScreen()),
+      );
     }
   }
 
@@ -130,6 +165,8 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     }
   }
+
+
 
   void handleLocationError(String errorMessage) {
     // Ensure the widget is still mounted before showing the SnackBar
