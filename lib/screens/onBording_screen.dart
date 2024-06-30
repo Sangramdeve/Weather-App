@@ -14,7 +14,7 @@ class OnbordingScreen extends StatefulWidget {
 class _OnbordingScreenState extends State<OnbordingScreen> {
   void initState() {
     super.initState();
-    //_checkFirstTimeUser();
+    _checkFirstTimeUser();
   }
 
   Future<void> _checkFirstTimeUser() async {

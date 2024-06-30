@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -19,52 +20,6 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-
-  List<String> _imageUrls = [];
-
-
-  @override
-  void initState() {
-    super.initState();
-    _performImageSearch();
-    print('object');
-  }
-
-  void _performImageSearch() async {
-    final weatherProvider = Provider.of<WeatherProvider>(context, listen: false);
-    String searchText = weatherProvider.weatherData!.weather[0].description;
-
-    if (searchText.isNotEmpty) {
-      // Add additional keywords to focus on weather-related images
-      String apiUrl =
-          'https://api.unsplash.com/search/photos?query=$searchText&client_id=23z2EUtThzQ-PZiCRyNtmB0BE8LqdcUQYGieW1fj2jE';
-
-      try {
-        var response = await http.get(Uri.parse(apiUrl));
-
-        if (response.statusCode == 200) {
-          var data = jsonDecode(response.body);
-
-          // Extract image URLs from the response
-          List<String> imageUrls = [];
-          for (var photo in data['results']) {
-            String imageUrl = photo['urls']['regular'];
-            imageUrls.add(imageUrl);
-            print('images$imageUrl');
-          }
-
-          setState(() {
-            _imageUrls = imageUrls;
-          });
-        } else {
-          throw Exception('Failed to load images');
-        }
-      } catch (e) {
-        print('Error: $e');
-      }
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +44,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
       body:  Consumer<WeatherProvider>(builder: (context,weatherProvider,_){
         return Container(
           decoration: BoxDecoration(
-            image: _imageUrls.isNotEmpty
-                ? DecorationImage(
-              image: NetworkImage(_imageUrls[0]),
-              fit: BoxFit.cover,
-            )
-                : null, // Handle the case when there are no images
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue, Colors.purple],
+              // Optional: Add stops for more control
+              stops: [0.0, 0.7],
+              // Optional: Add a transform to rotate the gradient
+              transform: GradientRotation(0.5),
+            ),
           ),
 
           child: SafeArea(
@@ -115,31 +73,49 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     style: const TextStyle(fontSize: 45,fontWeight: FontWeight.bold,color: Colors.white),),
                   Text('${weatherProvider.weatherData!.weather[0].description}',
                     style: const TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.white),),
-                  const SizedBox(height: 30,),
+                  Spacer(),
                   Container(
                     height: 90,
                     width: 350,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child:  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                      child: Row(
-                        children: [
-                          AirQuality(option: 'Clouds', value: '${weatherProvider.weatherData!.clouds.all}',),
-                          const Spacer(),
-                          AirQuality(option: 'Humidity', value: '${weatherProvider.weatherData!.main.humidity}%',),
-                          const Spacer(),
-                          AirQuality(option: 'Wind', value: '${weatherProvider.weatherData!.wind.speed}kmh',)
-                        ],
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.1),
+                        ),
                       ),
-                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.2),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                            child: Row(
+                              children: [
+                                AirQuality(option: 'Clouds', value: '${weatherProvider.weatherData!.clouds.all}',),
+                                const Spacer(),
+                                AirQuality(option: 'Humidity', value: '${weatherProvider.weatherData!.main.humidity}%',),
+                                const Spacer(),
+                                AirQuality(option: 'Wind', value: '${weatherProvider.weatherData!.wind.speed}kmh',)
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    )
                   ),
                   const Spacer(),
                   Container(
                       height: 400,
-                      width: 350,
+                      width: 360,
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(15),

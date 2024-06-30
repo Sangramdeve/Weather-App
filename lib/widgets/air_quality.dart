@@ -15,8 +15,8 @@ class AirQuality extends StatelessWidget {
             child: Icon(Icons.sunny,size: 17,)),
 
         Opacity(
-          opacity: 0.7,
-            child: Text(option)),
+          opacity: 0.5,
+            child: Text(option,)),
 
         Text(value,style: TextStyle(
           fontWeight: FontWeight.bold,fontSize: 20
