@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/screens/current_weather.dart';
+import 'package:weather_app/View//screens/current_weather.dart';
+import 'package:weather_app/routes/routes_name.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
+
+
 
 class OnbordingScreen extends StatefulWidget {
   const OnbordingScreen({super.key});
@@ -13,6 +16,7 @@ class OnbordingScreen extends StatefulWidget {
 
 class _OnbordingScreenState extends State<OnbordingScreen> {
 
+  @override
   void initState() {
     super.initState();
     _checkFirstTimeUser();
@@ -23,18 +27,15 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
     bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
     if (!isFirstTime) {
-      // If not first time, navigate to WeatherScreen
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const WeatherScreen()));
+      Navigator.pushReplacementNamed(context, RoutesName.weatherScreen);
     }
   }
 
   void _navigateToWeatherScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstTime', false); // Set the flag as false
+    await prefs.setBool('isFirstTime', false);
 
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const WeatherScreen()));
+    Navigator.pushReplacementNamed(context, RoutesName.weatherScreen);
   }
 
   @override

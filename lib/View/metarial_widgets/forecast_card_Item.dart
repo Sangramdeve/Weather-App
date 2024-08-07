@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/Model/daily_weather.dart';
+import 'package:weather_app/Model/daily_weather_forecast_model/forecast_json.dart';
 import 'package:weather_app/constants.dart';
 
 
 class ForecastCardItem extends StatelessWidget {
-  final dailyWeatherData weatherData;
+  final DailyWeatherData forecastData;
   final DateTime date;
 
   const ForecastCardItem({
     super.key,
-    required this.weatherData,
     required this.date,
+    required this.forecastData,
   });
 
 
   @override
   Widget build(BuildContext context) {
-    double tempInKelvin = weatherData.main.temp;
+   double tempInKelvin = forecastData.main.temp;
     double tempInCelsius = tempInKelvin - 273.15;
-    String weatherIcon = weatherData.weather[0].icon;
+   String weatherIcon = forecastData.weather[0].icon;
 
     String iconUrl = 'https://openweathermap.org/img/wn/$weatherIcon.png';
 

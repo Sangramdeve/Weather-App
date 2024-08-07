@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../Model/daily_weather.dart';
-import '../Model/weather_model.dart';
+import '../Model/current_weather_model/json_model.dart';
+import '../Model/daily_weather_forecast_model/forecast_json.dart';
+
+
 
 class WeatherProvider extends ChangeNotifier {
   WeatherData? _weatherData;
-  List<dailyWeatherData> _weatherForecastList = [];
+  List<WeatherForecast> _weatherForecastList = [];
 
   WeatherData? get weatherData => _weatherData;
-  List<dailyWeatherData> get weatherForecastList => _weatherForecastList;
+  List<WeatherForecast> get weatherForecastList => _weatherForecastList;
 
   set weatherData(WeatherData? weatherData) {
     _weatherData = weatherData;
     notifyListeners(); // Notify listeners of any changes related to weatherData
   }
 
-  void updateWeatherForecastList(List<dailyWeatherData> newData) {
+  void updateWeatherForecastList(List<WeatherForecast> newData) {
     _weatherForecastList = newData;
     notifyListeners(); // Notify listeners of any changes related to weatherForecastList
   }
